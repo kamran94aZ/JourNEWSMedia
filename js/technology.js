@@ -19,17 +19,16 @@ const api = {
 
 async function fetchData() {
     try {
-        const json = await api.getAll();
-        if (json.status === 'success' && json.data) {
-            db.articles = json.data.filter(art => art.category?.toLowerCase() === 'technology');
-        } else {
-            db.articles = [];
-        }
+        const response = await fetch('json/journews_db.articles.json');
+        const json = await response.json();
+        
+        db.articles = (json.status === 'success' && json.data) ? json.data : json;
+        
         renderAll();
     } catch (err) {
-        console.error("Database connection error!", err);
-        const container = document.getElementById("technologyContainer");
-        if (container) container.innerHTML = `<p class="error-msg">Secure connection to MongoDB failed.</p>`;
+        console.error("Connection Error:", err);
+        const container = document.getElementById("articlesContainer");
+        if (container) container.innerHTML = `<p style="color: #ff4a4a;">Connection failed.</p>`;
     }
 }
 
