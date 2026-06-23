@@ -3,7 +3,7 @@ let db = { articles: [] };
 
 const api = {
     getAll: async () => {
-        const response = await fetch(API_BASE);
+        const response = await fetch('json/journews_db.articles.json');
         if (!response.ok) throw new Error('Network error');
         return await response.json();
     },
@@ -21,13 +21,11 @@ async function fetchData() {
     try {
         const response = await fetch('json/journews_db.articles.json');
         const json = await response.json();
-        
         db.articles = (json.status === 'success' && json.data) ? json.data : json;
-        
         renderAll();
     } catch (err) {
         console.error("Connection Error:", err);
-        const container = document.getElementById("articlesContainer");
+        const container = document.getElementById("technologyContainer");
         if (container) container.innerHTML = `<p style="color: #ff4a4a;">Connection failed.</p>`;
     }
 }
@@ -78,7 +76,7 @@ function renderAll() {
             <h2 class="article-title">${article.title}</h2>
             <div class="article-content">${article.content}</div>
             <div class="article-footer">
-                ${article.link ? `<a href="${article.link}" target="_blank" class="read-more-link">Source Evidence →</a>` : '<span></span>'}
+                ${article.link ? `<a href="${article.link}" target="_blank" class="read-more-link">Read more</a>` : '<span></span>'}
             </div>
         `;
         container.appendChild(articleCard);
