@@ -1,4 +1,5 @@
 const API_BASE = 'https://api.jour-news.com/api/articles';
+const CURRENT_PAGE_CATEGORY = 'NGO';
 let db = { articles: [] };
 
 const api = {
@@ -19,26 +20,23 @@ const api = {
 
 async function fetchData() {
     try {
-        const response = await fetch('json/journews_db.articles.json');
-        const json = await response.json();
-        
-        db.articles = (json.status === 'success' && json.data) ? json.data : json;
-        
-        renderAll();
+        const data = await api.getAll();
+        db.articles = (data.status === 'success' && data.data) ? data.data : data;
     } catch (err) {
-        console.error("Connection Error:", err);
-        const container = document.getElementById("ngoContainer");
-        if (container) container.innerHTML = `<p style="color: #ff4a4a;">Connection failed.</p>`;
+        try {
+            const response = await fetch('json/journews_db.articles.json');
+            const json = await response.json();
+            db.articles = (json.status === 'success' && json.data) ? json.data : json;
+        } catch (jsonErr) {}
     }
+    renderAll();
 }
 
 async function syncArticle(articleData) {
     try {
         const json = await api.create(articleData);
         if (json.status === 'success') await fetchData();
-    } catch (err) {
-        console.error("Synchronization error:", err);
-    }
+    } catch (err) {}
 }
 
 async function addArticle() {
@@ -51,7 +49,7 @@ async function addArticle() {
         return;
     }
 
-    await syncArticle({ title, content, category: "NGO", link });
+    await syncArticle({ title, content, category: CURRENT_PAGE_CATEGORY, link });
     
     document.querySelectorAll("#articleTitleInput, #articleContentInput, #articleLinkInput").forEach(el => el.value = "");
 }
@@ -60,16 +58,18 @@ function renderAll() {
     const container = document.getElementById("ngoContainer");
     if (!container) return;
 
-    if (db.articles.length === 0) {
-        container.innerHTML = `<p class="no-data-msg">No secure NGO records found in the network.</p>`;
+    const filtered = db.articles.filter(a => a.category === CURRENT_PAGE_CATEGORY);
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<p class="no-data-msg">No ${CURRENT_PAGE_CATEGORY} records found in the network.</p>`;
         return;
     }
 
     container.innerHTML = "";
-    db.articles.forEach(article => {
+    filtered.forEach(article => {
         const articleCard = document.createElement("article");
         articleCard.className = "article-card";
-        const date = new Date(article.createdAt).toLocaleDateString("en-US", {
+        const date = new Date(article.createdAt || Date.now()).toLocaleDateString("en-US", {
             year: 'numeric', month: 'long', day: 'numeric'
         });
 
