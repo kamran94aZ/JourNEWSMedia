@@ -20,7 +20,7 @@ async function fetchData() {
         console.error("Connection Error:", err);
         const container = document.getElementById("articlesContainer");
         if (container) {
-            container.innerHTML = `<p style="color: #ff4a4a;">Xəbərləri yükləmək mümkün olmadı.</p>`;
+            container.innerHTML = `<p style="color: #ff4a4a;">Failed to load articles.</p>`;
         }
     }
 }
@@ -44,7 +44,7 @@ function renderAll() {
             </div>
             <h2>${article.title}</h2>
             <div>${article.content}</div>
-            ${article.link ? `<br><a href="${article.link}" target="_blank">Daha ətraflı</a>` : ''}
+            ${article.link ? `<br><a href="${article.link}" target="_blank">Read more</a>` : ''}
         `;
         container.appendChild(articleCard);
     });
