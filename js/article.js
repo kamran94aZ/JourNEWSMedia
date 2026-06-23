@@ -53,5 +53,5 @@ function renderAll() {
     });
 }
 
-// Səhifə yüklənəndə məlumatları çək
+
 fetchData();
