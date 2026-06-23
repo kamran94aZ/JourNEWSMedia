@@ -17,7 +17,7 @@ const api = {
     }
 };
 
-// Səhifəyə uyğun olaraq bu dəyişəni təyin et (məsələn: 'Media', 'Technology', 'Science')
+
 const CURRENT_PAGE_CATEGORY = 'Media'; 
 
 async function fetchData() {
