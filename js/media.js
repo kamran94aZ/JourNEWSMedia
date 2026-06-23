@@ -17,19 +17,26 @@ const api = {
     }
 };
 
+// Səhifəyə uyğun olaraq bu dəyişəni təyin et (məsələn: 'Media', 'Technology', 'Science')
+const CURRENT_PAGE_CATEGORY = 'Media'; 
+
 async function fetchData() {
     try {
-        const response = await fetch('json/journews_db.articles.json');
-        const json = await response.json();
         
-        db.articles = (json.status === 'success' && json.data) ? json.data : json;
-        
-        renderAll();
+        const data = await api.getAll();
+        db.articles = (data.status === 'success' && data.data) ? data.data : data;
     } catch (err) {
-        console.error("Connection Error:", err);
-        const container = document.getElementById("mediaContainer");
-        if (container) container.innerHTML = `<p style="color: #ff4a4a;">Connection failed.</p>`;
+        console.warn("API unavailable, falling back to local JSON:", err);
+        
+        try {
+            const response = await fetch('json/journews_db.articles.json');
+            const json = await response.json();
+            db.articles = (json.status === 'success' && json.data) ? json.data : json;
+        } catch (jsonErr) {
+            console.error("Local load failed:", jsonErr);
+        }
     }
+    renderAll(CURRENT_PAGE_CATEGORY);
 }
 
 async function syncArticle(articleData) {
@@ -51,25 +58,29 @@ async function addArticle() {
         return;
     }
 
-    await syncArticle({ title, content, category: "Media", link });
+  
+    await syncArticle({ title, content, category: CURRENT_PAGE_CATEGORY, link });
     
     document.querySelectorAll("#articleTitleInput, #articleContentInput, #articleLinkInput").forEach(el => el.value = "");
 }
 
-function renderAll() {
+function renderAll(category) {
     const container = document.getElementById("mediaContainer");
     if (!container) return;
 
-    if (db.articles.length === 0) {
-        container.innerHTML = `<p class="no-data-msg">No secure media records found in the network.</p>`;
+   
+    const filtered = db.articles.filter(a => a.category === category);
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<p class="no-data-msg">No ${category} records found.</p>`;
         return;
     }
 
     container.innerHTML = "";
-    db.articles.forEach(article => {
+    filtered.forEach(article => {
         const articleCard = document.createElement("article");
         articleCard.className = "article-card";
-        const date = new Date(article.createdAt).toLocaleDateString("en-US", {
+        const date = new Date(article.createdAt || Date.now()).toLocaleDateString("en-US", {
             year: 'numeric', month: 'long', day: 'numeric'
         });
 
