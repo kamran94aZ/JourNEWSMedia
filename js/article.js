@@ -1,9 +1,7 @@
-const API_BASE = 'https://api.jour-news.com/api/articles';
 let db = { articles: [] };
 
 const api = {
     getAll: async () => {
-        // JSON faylının olduğu ünvan
         const response = await fetch('json/journews_db.articles.json');
         if (!response.ok) throw new Error('Network error');
         return await response.json();
@@ -13,10 +11,7 @@ const api = {
 async function fetchData() {
     try {
         const json = await api.getAll();
-        
-        // Məlumatı JSON-dan db.articles-ə mənimsədirik
         db.articles = (json.status === 'success' && json.data) ? json.data : json;
-        
         renderAll();
     } catch (err) {
         console.error("Connection Error:", err);
@@ -37,7 +32,6 @@ function renderAll() {
         const articleCard = document.createElement("article");
         articleCard.className = "article-card";
         
-        // Tarixi formatlayırıq
         const date = article.createdAt ? new Date(article.createdAt).toLocaleDateString() : '';
 
         articleCard.innerHTML = `
@@ -52,6 +46,5 @@ function renderAll() {
         container.appendChild(articleCard);
     });
 }
-
 
 fetchData();
