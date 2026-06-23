@@ -12,7 +12,7 @@ const api = {
 async function fetchData() {
     try {
         const json = await api.getAll();
-        // Məlumatı array kimi qəbul edirik
+        
         db.articles = Array.isArray(json) ? json : (json.data || []);
         renderAll();
     } catch (err) {
@@ -24,8 +24,7 @@ function renderAll() {
     const container = document.getElementById("technologyContainer");
     if (!container) return;
 
-    // Həmin səhifəyə aid olan məqalələri filter edirik
-    // Məsələn, bu səhifə "Technology" kateqoriyasıdırsa:
+    
     const filteredArticles = db.articles.filter(article => 
         article.category && article.category.toLowerCase() === 'technology'
     );
