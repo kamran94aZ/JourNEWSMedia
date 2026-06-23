@@ -23,8 +23,11 @@ const api = {
 
 async function fetchData() {
     try {
-        const json = await api.getAll();
-        db.articles = (json.status === 'success' && json.data) ? json.data : [];
+        const response = await fetch('json/journews_db.articles.json');
+        const json = await response.json();
+        
+        db.articles = (json.status === 'success' && json.data) ? json.data : json;
+        
         renderAll();
     } catch (err) {
         console.error("Connection Error:", err);
