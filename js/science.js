@@ -27,7 +27,7 @@ async function fetchData() {
         renderAll();
     } catch (err) {
         console.error("Connection Error:", err);
-        const container = document.getElementById("articlesContainer");
+        const container = document.getElementById("scienceContainer");
         if (container) container.innerHTML = `<p style="color: #ff4a4a;">Connection failed.</p>`;
     }
 }
