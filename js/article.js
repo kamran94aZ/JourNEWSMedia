@@ -1,3 +1,4 @@
+const API_BASE = 'https://api.jour-news.com/api/articles';
 let db = { articles: [] };
 
 const api = {
@@ -11,7 +12,9 @@ const api = {
 async function fetchData() {
     try {
         const json = await api.getAll();
+        
         db.articles = (json.status === 'success' && json.data) ? json.data : json;
+        
         renderAll();
     } catch (err) {
         console.error("Connection Error:", err);
