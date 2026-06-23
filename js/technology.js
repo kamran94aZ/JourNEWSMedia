@@ -6,67 +6,40 @@ const api = {
         const response = await fetch('json/journews_db.articles.json');
         if (!response.ok) throw new Error('Network error');
         return await response.json();
-    },
-    create: async (payload) => {
-        const response = await fetch(API_BASE, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        return await response.json();
     }
 };
 
 async function fetchData() {
     try {
-        const response = await fetch('json/journews_db.articles.json');
-        const json = await response.json();
-        db.articles = (json.status === 'success' && json.data) ? json.data : json;
+        const json = await api.getAll();
+        // Məlumatı array kimi qəbul edirik
+        db.articles = Array.isArray(json) ? json : (json.data || []);
         renderAll();
     } catch (err) {
         console.error("Connection Error:", err);
-        const container = document.getElementById("technologyContainer");
-        if (container) container.innerHTML = `<p style="color: #ff4a4a;">Connection failed.</p>`;
     }
-}
-
-async function syncArticle(articleData) {
-    try {
-        const json = await api.create(articleData);
-        if (json.status === 'success') await fetchData();
-    } catch (err) {
-        console.error("Synchronization error:", err);
-    }
-}
-
-async function addArticle() {
-    const title = document.getElementById("articleTitleInput")?.value.trim();
-    const content = document.getElementById("articleContentInput")?.value.trim();
-    const link = document.getElementById("articleLinkInput")?.value.trim();
-
-    if (!title || !content) {
-        alert("Title and content are required fields!");
-        return;
-    }
-
-    await syncArticle({ title, content, category: "Technology", link });
-    document.querySelectorAll("#articleTitleInput, #articleContentInput, #articleLinkInput").forEach(el => el.value = "");
 }
 
 function renderAll() {
     const container = document.getElementById("technologyContainer");
     if (!container) return;
 
-    if (db.articles.length === 0) {
-        container.innerHTML = `<p class="no-data-msg">No secure technology records found in the network.</p>`;
+    // Həmin səhifəyə aid olan məqalələri filter edirik
+    // Məsələn, bu səhifə "Technology" kateqoriyasıdırsa:
+    const filteredArticles = db.articles.filter(article => 
+        article.category && article.category.toLowerCase() === 'technology'
+    );
+
+    if (filteredArticles.length === 0) {
+        container.innerHTML = `<p class="no-data-msg">No articles found in this category.</p>`;
         return;
     }
 
     container.innerHTML = "";
-    db.articles.forEach(article => {
+    filteredArticles.forEach(article => {
         const articleCard = document.createElement("article");
         articleCard.className = "article-card";
-        const date = new Date(article.createdAt).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });
+        const date = article.createdAt ? new Date(article.createdAt).toLocaleDateString("en-US") : '';
 
         articleCard.innerHTML = `
             <div class="article-meta">
@@ -76,7 +49,7 @@ function renderAll() {
             <h2 class="article-title">${article.title}</h2>
             <div class="article-content">${article.content}</div>
             <div class="article-footer">
-                ${article.link ? `<a href="${article.link}" target="_blank" class="read-more-link">Read more</a>` : '<span></span>'}
+                ${article.link ? `<a href="${article.link}" target="_blank" class="read-more-link">Read more</a>` : ''}
             </div>
         `;
         container.appendChild(articleCard);
