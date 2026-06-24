@@ -3,7 +3,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
 
     const submitBtn = document.getElementById("submitBtn");
     
-    // Məlumatları alırıq
+    
     const formData = {
         fullName: document.getElementById("fullname").value.trim(),
         email: document.getElementById("email").value.trim(),
@@ -16,7 +16,6 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         return;
     }
 
-    // Düyməni kilidləyirik (təkrar göndərmənin qarşısını alırıq)
     submitBtn.disabled = true;
     submitBtn.value = "Sending...";
 
