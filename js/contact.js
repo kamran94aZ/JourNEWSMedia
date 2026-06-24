@@ -1,12 +1,13 @@
 document.getElementById("registerForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
+    const submitBtn = document.getElementById("submitBtn");
+    
+    // Məlumatları alırıq
     const formData = {
         fullName: document.getElementById("fullname").value.trim(),
         email: document.getElementById("email").value.trim(),
         phone: document.getElementById("phone").value.trim(),
-        title: document.getElementById("title").value.trim(),
-        organization: document.getElementById("organization").value.trim(),
         createdAt: new Date().toISOString()
     };
 
@@ -15,9 +16,11 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         return;
     }
 
-    try {
-        console.log("Submitting data to jour-news.com/data.json:", formData);
+    // Düyməni kilidləyirik (təkrar göndərmənin qarşısını alırıq)
+    submitBtn.disabled = true;
+    submitBtn.value = "Sending...";
 
+    try {
         const response = await fetch("https://jour-news.com/api/save-data", {
             method: "POST",
             headers: {
@@ -27,14 +30,17 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         });
 
         if (response.ok) {
-            alert("Registration successful and data updated!");
+            alert("Registration successful!");
             document.getElementById("registerForm").reset();
         } else {
-            throw new Error("Server responded with an error.");
+            throw new Error("Server error.");
         }
-
     } catch (error) {
         console.error("Submission error:", error);
         alert("An error occurred. Please try again.");
+    } finally {
+        // Uğurlu və ya uğursuz olmasından asılı olmayaraq düyməni bərpa edirik
+        submitBtn.disabled = false;
+        submitBtn.value = "Submit";
     }
 });
