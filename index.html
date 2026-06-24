@@ -88,19 +88,21 @@
         </main>
     </div> 
     <form id="registerForm">
-        <fieldset>
-            <legend>Contact</legend>
-            <ol>
-                <li><label for="firstlast">Full Name</label>
-                    <input type="text" name="fullname" id="firstlast"></li>
-                <li><label for="email">Email:</label>
-                    <input type="text" name="email" id="email"></li>
-                <li><label for="phone">Phone Number</label>
-                    <input type="tel" name="phone" id="phone"></li>
-            </ol>
-            <input type="submit" value="Submit">
-        </fieldset>
-    </form>
+    <fieldset>
+        <legend>Contact</legend>
+        <ol>
+            <li><label for="fullname">Full Name</label>
+                <input type="text" name="fullname" id="fullname" required></li>
+            <li><label for="email">Email:</label>
+                <input type="email" name="email" id="email" required></li>
+            <li><label for="phone">Phone Number</label>
+                <input type="tel" name="phone" id="phone"></li>
+        </ol>
+        <input type="submit" id="submitBtn" value="Submit">
+    </fieldset>
+</form>
 </body>
 <script src="js/script.js"></script>
+
+<script src="js/contact.js"></script>
 </html>
