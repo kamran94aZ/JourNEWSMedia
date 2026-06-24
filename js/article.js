@@ -3,7 +3,7 @@ let db = { articles: [] };
 
 const api = {
     getAll: async () => {
-        const response = await fetch('json/journews_db.articles.json');
+        const response = await fetch('json/journews_db.articles.json?t=' + new Date().getTime());
         if (!response.ok) throw new Error('Network error');
         return await response.json();
     }
