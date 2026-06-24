@@ -1,6 +1,6 @@
 /* ===== Global Design ===== */
 * {
-    box-sizing: border-box; /* Bu vacibdir ki, genişliklər düzgün işləsin */
+    box-sizing: border-box; 
 }
 
 body {
