@@ -3,7 +3,7 @@ let db = { articles: [] };
 
 const api = {
     getAll: async () => {
-        const response = await fetch('json/journews_db.data.json');
+        const response = await fetch('json/journews_db.articles.json');
         if (!response.ok) throw new Error('Network error');
         return await response.json();
     }
@@ -11,10 +11,8 @@ const api = {
 
 async function fetchData() {
     try {
-        const json = await api.getAll();
-        
-        db.articles = (json.status === 'success' && json.data) ? json.data : json;
-        
+        const data = await api.getAll();
+        db.articles = Array.isArray(data) ? data : [];
         renderAll();
     } catch (err) {
         console.error("Connection Error:", err);
@@ -35,7 +33,8 @@ function renderAll() {
         const articleCard = document.createElement("article");
         articleCard.className = "article-card";
         
-        const date = article.createdAt ? new Date(article.createdAt).toLocaleDateString() : '';
+        const rawDate = article.createdAt && article.createdAt.$date ? article.createdAt.$date : article.createdAt;
+        const date = rawDate ? new Date(rawDate).toLocaleDateString() : '';
 
         articleCard.innerHTML = `
             <div class="article-meta">
