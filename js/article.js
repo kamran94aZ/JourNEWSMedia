@@ -3,7 +3,7 @@ let db = { articles: [] };
 
 const api = {
     getAll: async () => {
-        // Fayl yolu birbaşa journews_db.data.json olaraq qeyd edildi
+        
         const response = await fetch('json/journews_db.data.json?t=' + new Date().getTime());
         if (!response.ok) throw new Error('Network error');
         return await response.json();
