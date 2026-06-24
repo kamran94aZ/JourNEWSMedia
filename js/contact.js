@@ -16,10 +16,22 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     }
 
     try {
-        console.log("Submitting data:", formData);
-        
-        alert("Registration successful!");
-        document.getElementById("registerForm").reset();
+        console.log("Submitting data to jour-news.com/data.json:", formData);
+
+        const response = await fetch("https://jour-news.com/api/save-data", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            alert("Registration successful and data updated!");
+            document.getElementById("registerForm").reset();
+        } else {
+            throw new Error("Server responded with an error.");
+        }
 
     } catch (error) {
         console.error("Submission error:", error);
