@@ -11,7 +11,7 @@ body {
     padding-top: 40px;
 }
 
-
+/* ===== Title ===== */
 h2 {
     font-size: 32px;
     font-weight: 800;
@@ -21,7 +21,7 @@ h2 {
     text-shadow: 0 0 12px rgba(255, 223, 59, 0.5);
 }
 
-
+/* ===== Form Container ===== */
 form {
     width: 380px;
     padding: 25px;
@@ -32,7 +32,7 @@ form {
     animation: fadeIn 0.7s ease-in-out;
 }
 
-
+/* ===== Form Input Rows ===== */
 form p {
     font-size: 15px;
     margin-bottom: 18px;
@@ -40,7 +40,7 @@ form p {
     font-weight: 600;
 }
 
-
+/* ===== Input Design ===== */
 input {
     width: 100%;
     margin-top: 6px;
@@ -64,7 +64,7 @@ input:focus {
     transform: scale(1.02);
 }
 
-
+/* ===== Button Styling ===== */
 button {
     width: 100%;
     padding: 14px;
@@ -87,7 +87,7 @@ button:active {
     transform: translateY(1px);
 }
 
-
+/* ===== Result Box ===== */
 #result {
     width: 380px;
     margin-top: 25px;
@@ -102,7 +102,7 @@ button:active {
     animation: fadeIn 0.5s ease;
 }
 
-
+/* ===== Animations ===== */
 @keyframes fadeIn {
     from {
         opacity: 0;
