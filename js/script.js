@@ -1,7 +1,7 @@
-// --- SECURED JAVASCRIPT INTERACTIVITY CONTROL LAYER ---
+/ --- SECURED JAVASCRIPT INTERACTIVITY CONTROL LAYER ---
 document.addEventListener('DOMContentLoaded', () => {
 
-const API_URL = 'https://jour-news.com/api/articles';
+const API_URL = 'http://51.21.245.87:3000/api/articles';
 
 async function fetchArticles() {
     try {
