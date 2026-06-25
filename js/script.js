@@ -1,7 +1,7 @@
 / --- SECURED JAVASCRIPT INTERACTIVITY CONTROL LAYER ---
 document.addEventListener('DOMContentLoaded', () => {
 
-const API_URL = 'http://51.21.245.87:3000/api/articles';
+const API_URL = 'https://jour-news.com/api/articles';
 
 async function fetchArticles() {
     try {
@@ -11,7 +11,7 @@ async function fetchArticles() {
             throw new Error('Network response was not ok');
         }
         
-        const result = await response.json();
+        const result = await response.json(journews_db.articles.json);
         console.log("Articles successfully fetched:", result.data);
         
         return result.data;
