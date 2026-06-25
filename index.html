@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css?v=1.0.3">
+    <link rel="stylesheet" href="css/style.css?v=1.0.5">
     <title>Jour-NewsMedia</title>
 </head>
 <body>
@@ -48,32 +48,24 @@
         </ol>
     </main>
 
-    <form id="registerForm">
+    <div id="registerForm">
         <fieldset>
             <legend>Contact</legend>
-            <ol>
+            <ol class="contact-info-list">
                 <li>
-                    <label for="firstlast">Full Name</label>
-                    <input type="text" name="fullname" id="firstlast">
+                    <span class="contact-label">Phone:</span>
+                    <a href="tel:+381638131170" class="contact-link">+381 63 8131170</a>
                 </li>
                 <li>
-                    <label for="email">Email:</label>
-                    <input type="text" name="email" id="email">
-                </li>
-                <li>
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" name="phone" id="phone">
+                    <span class="contact-label">Email:</span>
+                    <a href="mailto:kamran.murad@jour-news.com" class="contact-link">kamran.murad@jour-news.com</a>
                 </li>
             </ol>
-            <input type="submit" value="Submit">
         </fieldset>
-    </form>
-    <script src="js/contact.js"></script>
+    </div>
+
     <footer>
         <p>Copyright&copy:2026 JourNews NMedia</p>
-    </footer>
-</body>
-</html>
     </footer>
 </body>
 </html>
