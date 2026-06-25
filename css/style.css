@@ -216,7 +216,12 @@ main {
     color: var(--muted-text);
     font-size: 1.15rem;
 }
-
+article-card h2 {
+    margin: 10px 0;
+    padding: 0 15px;
+    text-align: left;
+    font-size: 1.5rem;
+}
 #news {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
