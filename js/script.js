@@ -5,7 +5,7 @@ const API_URL = 'https://jour-news.com/api/articles';
 
 async function fetchArticles() {
     try {
-        const response = await fetch('json/journews_db.articles.json'); // Fayl yolunu düzgün göstər
+        const response = await fetch('json/journews_db.articles.json'); 
         if (!response.ok) throw new Error('Network response was not ok');
         
         const data = await response.json(); // Burada obyektə çevrilir
