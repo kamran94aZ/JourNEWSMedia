@@ -51,7 +51,7 @@ function renderArticles(articles) {
                 <h2>${article.title}</h2>
                 <p>${article.content}</p>
                 <div class="news-footer">
-                    <a href="${article.link}" target="_blank" class="btn-read-more">Read Full Story</a>
+                    <a href="${article.link}" target="_blank" class="btn-read-more">Source Evidence</a>
                 </div>
             </div>
         `;
