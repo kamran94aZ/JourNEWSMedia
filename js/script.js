@@ -11,7 +11,7 @@ async function fetchArticles() {
             throw new Error('Network response was not ok');
         }
         
-        const result = await response.json(journewws_db.articles.json);
+        const result = await response.json();
         console.log("Articles successfully fetched:", result.data);
         
         return result.data;
