@@ -59,5 +59,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 menuBtn.classList.remove('active');
             }
         });
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('id');
+            if (articleId) {
+                const response = await fetch('json/journews_db.articles.json');
+                const articles = await response.json();
+                const article = articles.find(a => a.id == articleId);
+
+                if (article) {
+                    document.getElementById('article-title').innerText = article.title;
+                    document.getElementById('article-content').innerHTML = article.content;
+                    document.getElementById('article-date').innerText = article.date;
+                }
+            }
+        });
     }
 })
