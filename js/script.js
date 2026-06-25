@@ -1,78 +1,47 @@
-// --- SECURED JAVASCRIPT INTERACTIVITY CONTROL LAYER ---
 document.addEventListener('DOMContentLoaded', () => {
-
-    const API_URL = 'https://jour-news.com/api/articles';
-
-    async function fetchArticles() {
-        try {
-            const response = await fetch('json/journews_db.articles.json'); 
-            if (!response.ok) throw new Error('Network response was not ok');
-            
-            const data = await response.json();
-            return data; 
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    }
-
-    fetchArticles();
-    
-    // 1. Theme Switcher with Corrected logic
+    // 1. Dark/Light Mode
     const themeBtn = document.getElementById('theme-btn');
     const savedTheme = localStorage.getItem('theme');
-    
-    // Apply saved theme immediately on load
-    if (savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-        document.documentElement.removeAttribute('data-theme');
-    }
+    if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
 
-    // Toggle theme
     if (themeBtn) {
         themeBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
+            const isDark = document.documentElement.hasAttribute('data-theme');
+            isDark ? document.documentElement.removeAttribute('data-theme') : document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
         });
     }
 
-    // 2. Mobile Navigation with Null-Safe Protection
-    const menuBtn = document.getElementById('menu-btn');
-    const navMenu = document.getElementById('nav-menu');
+    // 2. Məqalələri render edən funksiya (index.html üçün)
+    const newsContainer = document.getElementById('news');
+    if (newsContainer) {
+        fetch('json/journews_db.articles.json')
+            .then(res => res.json())
+            .then(articles => {
+                newsContainer.innerHTML = articles.map(a => `
+                    <article class="news-card">
+                        <div class="news-content">
+                            <h2>${a.title}</h2>
+                            <p>${a.content.substring(0, 150)}...</p>
+                            <a href="article.html?id=${a.id}" class="btn-read-more">Read Full Story →</a>
+                        </div>
+                    </article>
+                `).join('');
+            });
+    }
 
-    if (menuBtn && navMenu) {
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            navMenu.classList.toggle('active');
-            menuBtn.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!menuBtn.contains(e.target) && !navMenu.contains(e.target)) {
-                navMenu.classList.remove('active');
-                menuBtn.classList.remove('active');
-            }
-        });
-        document.addEventListener('DOMContentLoaded', async () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const articleId = urlParams.get('id');
-            if (articleId) {
-                const response = await fetch('json/journews_db.articles.json');
-                const articles = await response.json();
-                const article = articles.find(a => a.id == articleId);
-
+    // 3. Xüsusi məqaləni yükləyən funksiya (article.html üçün)
+    const titleEl = document.getElementById('article-title');
+    if (titleEl) {
+        const id = new URLSearchParams(window.location.search).get('id');
+        fetch('json/journews_db.articles.json')
+            .then(res => res.json())
+            .then(articles => {
+                const article = articles.find(a => a.id == id);
                 if (article) {
-                    document.getElementById('article-title').innerText = article.title;
+                    titleEl.innerText = article.title;
                     document.getElementById('article-content').innerHTML = article.content;
-                    document.getElementById('article-date').innerText = article.date;
                 }
-            }
-        });
+            });
     }
-})
+});
