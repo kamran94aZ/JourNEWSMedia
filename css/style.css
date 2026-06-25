@@ -1,41 +1,16 @@
 /* ==========================================================================
-   1. MODERN RESET & VARIABLES (2026 Standards)
+   1. GLOBAL SETTINGS & VARIABLES (Sakit və Professional Light Stil)
    ========================================================================== */
-@custom-media --motionOK (prefers-reduced-motion: no-preference);
-
 :root {
-    /* Color Palette - Modern Corporate Tech */
-    --bg-primary: #f8fafc;
-    --bg-surface: #ffffff;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --accent: #2563eb;
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --accent-color: #2563eb;
     --accent-hover: #1d4ed8;
     --border-color: #e2e8f0;
-    --glass-bg: rgba(255, 255, 255, 0.75);
-    --glass-border: rgba(226, 232, 240, 0.8);
-    
-    /* Layout & Spacing */
-    --max-width: 1200px;
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 24px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Dark Mode auto-detection & toggle class support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-primary: #0b0f19;
-        --bg-surface: #111827;
-        --text-primary: #f9fafb;
-        --text-secondary: #9ca3af;
-        --accent: #3b82f6;
-        --accent-hover: #60a5fa;
-        --border-color: #1f2937;
-        --glass-bg: rgba(17, 24, 39, 0.75);
-        --glass-border: rgba(31, 41, 55, 0.8);
-    }
+    --max-content-width: 750px; /* Kontentin ortada və nizamlı qalması üçün */
+    --radius: 12px;
 }
 
 *, *::before, *::after {
@@ -46,9 +21,9 @@
 
 html {
     scroll-behavior: smooth;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
     line-height: 1.6;
 }
 
@@ -56,14 +31,30 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: center; /* Hər şeyi üfüqi olaraq ortalayır */
+}
+
+/* HTML-dəki nizamsız <br> teqlərinin dizaynı korlamaması üçün */
+br {
+    display: none;
 }
 
 /* ==========================================================================
-   2. LAYOUT & CONTAINERS
+   2. HEADER & NAVIGATION (Tam En)
    ========================================================================== */
+header {
+    width: 100%;
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
 .app-container {
     width: 100%;
-    max-width: var(--max-width);
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
@@ -71,183 +62,151 @@ body {
     align-items: center;
 }
 
-/* ==========================================================================
-   3. HEADER & NAVIGATION (Glassmorphism)
-   ========================================================================== */
-header {
-    sticky: top 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 1rem 0;
-    transition: var(--transition);
-}
-
 .logo a {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 800;
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--text-main);
     letter-spacing: -0.5px;
 }
 
 .logo span {
-    color: var(--accent);
+    color: var(--accent-color);
 }
 
 #nav-menu ul {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.25rem;
     list-style: none;
 }
 
 #nav-menu a {
     text-decoration: none;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-weight: 500;
     font-size: 0.95rem;
-    transition: var(--transition);
+    transition: color 0.2s ease;
     padding: 0.5rem 0.75rem;
-    border-radius: var(--radius-sm);
+    border-radius: 6px;
 }
 
 #nav-menu a:hover, #nav-menu a.active {
-    color: var(--accent);
-    background: rgba(37, 99, 235, 0.1);
+    color: var(--accent-color);
+    background-color: rgba(37, 99, 235, 0.08);
 }
 
 .nav-controls {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.5rem;
 }
 
 .nav-controls button {
-    background: var(--bg-surface);
+    background: transparent;
     border: 1px solid var(--border-color);
     padding: 0.5rem;
-    border-radius: var(--radius-sm);
+    border-radius: 6px;
     cursor: pointer;
-    transition: var(--transition);
+    width: 38px;
+    height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
 }
 
-.nav-controls button:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-}
-
-/* Placeholder icons using pure CSS */
-.icon-theme::before { content: "🌙"; }
+.icon-theme::before { content: "☀️"; }
 .icon-menu::before { content: "☰"; }
 
 /* ==========================================================================
-   4. HERO SECTION (Intro Texts)
+   3. INTRO SECTION (Giriş Yazıları - Ortalanmış)
    ========================================================================== */
 body > h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 900;
+    font-size: 2.5rem;
+    font-weight: 800;
     text-align: center;
-    margin-top: 4rem;
-    letter-spacing: -1px;
-    background: linear-gradient(to right, var(--text-primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-top: 3.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
 }
 
 body > h2 {
-    font-size: clamp(1.2rem, 2vw, 1.75rem);
-    font-weight: 400;
+    font-size: 1.35rem;
+    font-weight: 500;
     text-align: center;
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
 }
 
 body > p {
     text-align: center;
-    max-width: 600px;
-    margin: 0 auto 0.5rem auto;
-    color: var(--text-secondary);
+    max-width: var(--max-content-width);
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    padding: 0 1.5rem;
 }
 
 body > p em {
-    color: var(--accent);
     font-style: normal;
     font-weight: 600;
+    color: var(--accent-color);
 }
 
-/* Remove ugly HTML line breaks */
-br { display: none; }
-
 /* ==========================================================================
-   5. MAIN CONTENT (Grid Cards)
+   4. MAIN CONTENT (Məqalələr Bölməsi - Səliqəli və Ortada)
    ========================================================================== */
 main {
-    max-width: var(--max-width);
-    margin: 4rem auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
     width: 100%;
+    max-width: var(--max-content-width);
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
 }
 
 main h3 {
-    grid-column: 1 / -1;
-    font-size: 1.5rem;
-    margin-top: 1.5rem;
-    border-left: 4px solid var(--accent);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+    border-left: 4px solid var(--accent-color);
     padding-left: 0.75rem;
 }
 
-/* Targeting the container elements for the sections inside main */
-main h3 + p, main p1 {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
+main p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
 }
 
-/* Fixing your custom <p1> tag styling just in case */
+/* HTML-dəki xüsusi p1 teqi üçün */
 p1 {
     display: block;
-    margin-top: 0.25rem;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
 }
 
 p1 em {
-    word-break: break-all;
-    color: var(--accent);
     font-style: normal;
-    display: block;
-    margin-top: 0.2rem;
+    color: var(--accent-color);
+    text-decoration: underline;
+    margin-left: 4px;
 }
 
 main ol {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-    padding-left: 1.25rem;
-    background: var(--bg-surface);
+    list-style-position: inside;
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
-    padding: 1.5rem 1.5rem 1.5rem 2.5rem;
-    border-radius: var(--radius-md);
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
 main ol li {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
     font-weight: 500;
-}
-
-main ol li::marker {
-    color: var(--accent);
-    font-weight: bold;
 }
 
 main ol li:last-child {
@@ -255,125 +214,112 @@ main ol li:last-child {
 }
 
 /* ==========================================================================
-   6. MODERN FORM DESIGN
+   5. CONTACT FORM (Ortalanmış blok)
    ========================================================================== */
 #registerForm {
-    max-width: 500px;
     width: 100%;
-    margin: 2rem auto 6rem auto;
-    padding: 0 2rem;
+    max-width: var(--max-content-width);
+    padding: 0 1.5rem;
+    margin-bottom: 5rem;
 }
 
 #registerForm fieldset {
     border: 1px solid var(--border-color);
-    background: var(--bg-surface);
-    padding: 2.5rem;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 #registerForm legend {
     font-weight: 700;
-    font-size: 1.25rem;
-    padding: 0 0.75rem;
-    color: var(--accent);
+    font-size: 1.15rem;
+    padding: 0 0.5rem;
+    color: var(--text-main);
 }
 
 #registerForm ol {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
 }
 
 #registerForm li {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.35rem;
 }
 
 #registerForm label {
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--text-muted);
 }
 
 #registerForm input[type="text"],
 #registerForm input[type="tel"] {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.65rem 0.85rem;
     border: 1px solid var(--border-color);
-    background: var(--bg-primary);
-    border-radius: var(--radius-sm);
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: var(--transition);
+    background-color: var(--bg-main);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    transition: border-color 0.2s;
 }
 
 #registerForm input:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    border-color: var(--accent-color);
 }
 
 #registerForm input[type="submit"] {
     width: 100%;
-    background: var(--accent);
-    color: white;
+    background-color: var(--accent-color);
+    color: #ffffff;
     border: none;
-    padding: 0.85rem;
-    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    border-radius: 6px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: var(--transition);
+    transition: background-color 0.2s;
 }
 
 #registerForm input[type="submit"]:hover {
-    background: var(--accent-hover);
-    transform: translateY(-1px);
+    background-color: var(--accent-hover);
 }
 
 /* ==========================================================================
-   7. FOOTER
+   6. FOOTER (Tam En)
    ========================================================================== */
 footer {
+    width: 100%;
     margin-top: auto;
-    background: var(--bg-surface);
+    background-color: var(--bg-card);
     border-top: 1px solid var(--border-color);
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     text-align: center;
 }
 
 footer p {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
 /* ==========================================================================
-   8. RESPONSIVE DESIGN (Mobile First Adjustments)
+   7. RESPONSIVE (Mobil tənzimləmə)
    ========================================================================== */
 @media (max-width: 768px) {
     #nav-menu {
-        display: none; /* JavaScript ilə açılıb-bağlanma menyusu üçün hazır vəziyyət */
+        display: none; /* Mobil menyu üçün gizlədilir */
     }
-    
     .app-container {
         padding: 0 1rem;
     }
-    
-    main {
-        grid-template-columns: 1fr;
-        padding: 0 1rem;
-        margin: 2rem auto;
-    }
-    
-    #registerForm {
-        padding: 0 1rem;
-    }
-    
-    #registerForm fieldset {
-        padding: 1.5rem;
+    body > h1 {
+        font-size: 2rem;
     }
 }
