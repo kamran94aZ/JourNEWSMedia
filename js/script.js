@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Məqalələri render edən funksiya (index.html üçün)
+
     const newsContainer = document.getElementById('news');
     if (newsContainer) {
         fetch('json/journews_db.articles.json')
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // 3. Xüsusi məqaləni yükləyən funksiya (article.html üçün)
+
     const titleEl = document.getElementById('article-title');
     if (titleEl) {
         const id = new URLSearchParams(window.location.search).get('id');
