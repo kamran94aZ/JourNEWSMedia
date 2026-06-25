@@ -14,7 +14,7 @@ async function fetchData(filterCategory = null) {
         const data = await api.getAll();
         db.articles = Array.isArray(data) ? data : [];
         
-        // Əgər filterCategory təyin olunubsa, yalnız həmin kateqoriyanı göstər
+       
         const filteredArticles = filterCategory 
             ? db.articles.filter(a => a.category && a.category.toLowerCase() === filterCategory.toLowerCase())
             : db.articles;
