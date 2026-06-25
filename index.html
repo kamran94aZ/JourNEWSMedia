@@ -14,22 +14,18 @@
             </div>
             <nav id="nav-menu">
                 <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="news.html">Global News</a></li>
                     <li><a href="ngo.html">NGO's</a></li>
-                    <li><a href="technology.html">Technology</a></li>
+                    <li><a href="technology.html" class="active">Technology</a></li>
                     <li><a href="science.html">Science</a></li>
                     <li><a href="article.html">Article</a></li>
                     <li><a href="media.html">Media</a></li>
                 </ul>
             </nav>
             <div class="nav-controls">
-                <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
-                    <div class="icon-theme"></div>
-                </button>
-                <button class="menu-toggle" id="menu-btn" aria-label="Toggle Menu">
-                    <div class="icon-menu"></div>
-                </button>
+                <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme"><div class="icon-theme"></div></button>
+                <button class="menu-toggle" id="menu-btn" aria-label="Toggle Menu"><div class="icon-menu"></div></button>
             </div>
         </div>
     </header>
@@ -41,65 +37,13 @@
                 <p>Independent Investigative Journalism Platform</p>
             </section>
 
-            <section id="news">
-                <!-- Card 1 -->
-                <article class="news-card">
-                    <div class="news-image">
-                        <div class="card-graphic"></div>
-                    </div>
-                    <div class="news-content">
-                        <div class="news-meta">
-                            <span>Investigate</span>
-                            <span>24.05.2026</span>
-                        </div>
-                        <h2>SOCAR Polymer Incident</h2>
-                        <p><strong>SOCAR Polymer Corruption Facts:</strong> Essential verification processes and documentation details. Investigation data highlights the transparency reports.</p>
-                        <div class="news-footer">
-                            <a href="https://github.com/kamran94aZ/LSMS/tree/main/SOCARPolymerEvidence" target="_blank" class="btn-read-more">
-                                View Github Profile <div class="arrow-icon"></div>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Card 2 -->
-                <article class="news-card">
-                    <div class="news-image" style="background: linear-gradient(135deg, #0284c7, #0369a1);">
-                        <div class="card-graphic" style="border-radius: 4px; transform: rotate(45deg);"></div>
-                    </div>
-                    <div class="news-content">
-                        <div class="news-meta">
-                            <span>Technology</span>
-                            <span>24.05.2026</span>
-                        </div>
-                        <h2>Future of Technology</h2>
-                        <p><strong>Kamran Muradov's Article:</strong> Today, I will comment on a recent report by the BBC. The report discusses the rapid development of quantum computers, nanotechnologies, and medical breakthroughs...</p>
-                        <div class="news-footer">
-                            <a href="https://www.bbc.com/news/articles/c865n800d5jo" target="_blank" class="btn-read-more">Read Full Story <div class="arrow-icon"></div></a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Card 3 -->
-                <article class="news-card">
-                    <div class="news-image" style="background: linear-gradient(135deg, #0284c7, #0369a1);">
-                        <div class="card-graphic" style="border-radius: 4px; transform: rotate(45deg);"></div>
-                    </div>
-                    <div class="news-content">
-                        <div class="news-meta">
-                            <span>Investigative</span>
-                            <span>24.05.2026</span>
-                        </div>
-                        <h2>Socar Polymer Interview Fraud</h2>
-                        <p>Before Interview fraud and manipulations.</p>
-                        <div class="news-footer">
-                            <a href="https://jour-news.com/article.html" class="btn-read-more">Read Full Story <div class="arrow-icon"></div></a>
-                        </div>
-                    </div>
-                </article>
+            <!-- Dinamik məzmun buraya yüklənəcək -->
+            <section id="articlesContainer" class="news-grid">
+                <!-- JavaScript vasitəsilə bura article-card elementləri əlavə olunacaq -->
             </section>
         </main>
-    </div>  
+    </div> 
+    
     <script src="js/script.js"></script>
 </body>
 </html>
