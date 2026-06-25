@@ -29,31 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Fetch and Render Articles (Index Page)
-    const newsContainer = document.getElementById('news');
-    if (newsContainer) {
-        fetch('json/journews_db.articles.json')
-            .then(res => res.json())
-            .then(articles => {
-                newsContainer.innerHTML = articles.map(a => `
-                    <article class="news-card">
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span>${a.category}</span>
-                                <span>${a.date}</span>
-                            </div>
-                            <h2>${a.title}</h2>
-                            <p>${a.content.substring(0, 150)}...</p>
-                            <div class="news-footer">
-                                <a href="article.html?id=${a.id}" class="btn-read-more">Read Full Story →</a>
-                            </div>
-                        </div>
-                    </article>
-                `).join('');
-            })
-            .catch(err => console.error("Error loading articles:", err));
-    }
-
+fetch('json/journews_db.articles.json')
+    .then(res => res.json())
+    .then(articles => {
+        console.log("Məqalələr yükləndi:", articles); // Əgər konsolda bunu görürsənsə, deməli məlumat gəlir
+        newsContainer.innerHTML = articles.map(a => `
+            <article class="news-card">
+                <div class="news-content">
+                    <h2>${a.title}</h2>
+                    <p>${a.content.substring(0, 150)}...</p>
+                    <a href="article.html?id=${a.id}" class="btn-read-more">Read Full Story →</a>
+                </div>
+            </article>
+        `).join('');
+    })
+    .catch(err => console.error("Xəta baş verdi:", err)); // Əgər xəta varsa, burada görəcəksən
     // 4. Load Specific Article (Article Page)
     const titleEl = document.getElementById('article-title');
     if (titleEl) {
