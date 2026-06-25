@@ -5,19 +5,13 @@ const API_URL = 'https://jour-news.com/api/articles';
 
 async function fetchArticles() {
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch('json/journews_db.articles.json'); // Fayl yolunu düzgün göstər
+        if (!response.ok) throw new Error('Network response was not ok');
         
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        
-        const result = await response.json(journews_db.articles.json);
-        console.log("Articles successfully fetched:", result.data);
-        
-        return result.data;
-        
+        const data = await response.json(); // Burada obyektə çevrilir
+        return data; 
     } catch (error) {
-        console.error("Error: Could not connect to the server.", error);
+        console.error("Error:", error);
     }
 }
 
