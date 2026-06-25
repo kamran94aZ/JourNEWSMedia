@@ -12,7 +12,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 2. Mobile Menu
+    const menuBtn = document.getElementById('menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+    if (menuBtn && navMenu) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+        });
+        document.addEventListener('click', (e) => {
+            if (!menuBtn.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                menuBtn.classList.remove('active');
+            }
+        });
+    }
 
+    // 3. Fetch and Render Articles (Index Page)
     const newsContainer = document.getElementById('news');
     if (newsContainer) {
         fetch('json/journews_db.articles.json')
@@ -21,16 +38,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 newsContainer.innerHTML = articles.map(a => `
                     <article class="news-card">
                         <div class="news-content">
+                            <div class="news-meta">
+                                <span>${a.category}</span>
+                                <span>${a.date}</span>
+                            </div>
                             <h2>${a.title}</h2>
                             <p>${a.content.substring(0, 150)}...</p>
-                            <a href="article.html?id=${a.id}" class="btn-read-more">Read Full Story →</a>
+                            <div class="news-footer">
+                                <a href="article.html?id=${a.id}" class="btn-read-more">Read Full Story →</a>
+                            </div>
                         </div>
                     </article>
                 `).join('');
-            });
+            })
+            .catch(err => console.error("Error loading articles:", err));
     }
 
-
+    // 4. Load Specific Article (Article Page)
     const titleEl = document.getElementById('article-title');
     if (titleEl) {
         const id = new URLSearchParams(window.location.search).get('id');
@@ -42,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     titleEl.innerText = article.title;
                     document.getElementById('article-content').innerHTML = article.content;
                 }
-            });
+            })
+            .catch(err => console.error("Error loading specific article:", err));
     }
 });
