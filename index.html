@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css?v=1.0.1">
+    <link rel="stylesheet" href="css/style.css?v=1.0.2">
     <title>Jour-NewsMedia</title>
 </head>
 <body>
@@ -24,10 +24,10 @@
                 </ul>
             </nav>
             <div class="nav-controls">
-                <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
+                <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme" onclick="location.href='article.html'">
                     <div class="icon-theme"></div>
                 </button>
-                <button class="menu-toggle" id="menu-btn" aria-label="Toggle Menu">
+                <button class="menu-toggle" id="menu-btn" aria-label="Toggle Menu" onclick="document.getElementById('nav-menu').classList.toggle('active')">
                     <div class="icon-menu"></div>
                 </button>
             </div>
@@ -41,14 +41,14 @@
     <main>
         <h3>Socar Polymer Evidence</h3>
         <p>Please find all resources</p><br>
-        <p1>Sources include:<em>https://jour-news.com/article.html</em></p1>
+        <p1>Sources include:<em><a href="article.html" class="active-link">https://jour-news.com/article.html</a></em></p1>
         <ol>
             <li>Socar Polymer Evidence</li>
             <li>Socar Polymer Interview Fraud</li>
         </ol>
         <h3>Future of Technology</h3>
         <p>Please find all resources</p><br>
-        <p1>Sources include:<em>https://jour-news.com/article.html</em></p1>
+        <p1>Sources include:<em><a href="article.html" class="active-link">https://jour-news.com/article.html</a></em></p1>
         <ol>
             <li>Socar Polymer Evidence</li>
             <li>Socar Polymer Interview Fraud</li>
