@@ -105,4 +105,16 @@
     "createdAt": {
       "$date": "2026-06-26T14:00:00.000Z"
     }
+  },
+{
+    "_id": {
+      "$oid": "6a26bdb77781e01f5a189bc7"
+    },
+    "category": "Investigative",
+    "title": "Systemic Negligence and Operational Malpractice at SOCAR Polymer",
+    "content": "This investigation exposes critical operational failures and administrative malpractice within the SOCAR Polymer laboratory systems. Key findings include: 1. Manual Data Entry Risks: Due to persistent database 'deadlocks' and system paralysis, laboratory staff were forced to enter data manually for months, creating high risks of data corruption and entry errors. 2. Administrative Negligence: System maintenance was neglected for years, with unoptimized service brokers, massive email caches, and useless batch data overloading the infrastructure. 3. Security and Resource Sabotage: Evidence suggests limited server resources were provided intentionally to sabotage system recovery efforts. Access to critical systems was restricted and manipulated to conceal evidence. 4. HR and Contractual Fraud: Probation periods were extended illegally, and employees were forced to perform unauthorized tasks under pressure. The administration, led by Adalat Muslumov, bypassed established training and induction protocols, using personnel like Arzu Hesenova to interfere with technical duties outside their job descriptions to maintain control over a failing system.",
+    "link": "https://github.com/kamran94aZ/LSMS/tree/main/SOCARPolymerEvidence",
+    "createdAt": {
+      "$date": "2026-06-26T20:25:00.000Z"
+    }
   }]
