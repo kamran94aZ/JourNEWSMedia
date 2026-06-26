@@ -39,7 +39,7 @@
     "_id": {
       "$oid": "6a26bdb77781e01f5a189bc6"
     },
-    "category": "Technical Analysis",
+    "category": "İnvestigative",
     "title": "Starlims System: Technical Analysis of System Tickets",
     "content": "This report details critical failures in the Starlims Laboratory Information Management System. 1. 'Page is not responding' in results entry: Caused by database deadlocks and memory leaks, leading to operational bottlenecks. 2. Starlims backup request (DEG and V1557 duplicates): API handshake failures and duplicate injections distort historical trend analysis. 3. COA Hexene-1 unloading report: Missing mandatory fields and mapping errors halt quality control. 4. Laboratory document management module: Lack of a secure module allows unauthorized protocol modifications, risking ISO 17025 accreditation. 5. QAS-analyses report email error: SMTP and firewall issues block critical alerts, delaying crisis response. 6. Missing attachments in notifications: File permission issues and storage errors prevent formal verification. 7. Crystal Report PDF export failure: Server memory (OOM) issues block large-scale documentation. 8. PP Final vs HDPE Final COA mismatch: Indicates deep database view bugs and formula corruption, threatening data integrity. These facts represent significant risks to supply chain operations and regulatory compliance.",
     "link": "https://github.com/kamran94aZ/LSMS/tree/main/SOCARPolymerEvidence",
