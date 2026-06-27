@@ -94,7 +94,8 @@
       "$date": "2026-06-27T11:09:50.000Z"
     }
   },
-"_id": {
+  {
+    "_id": {
       "$oid": "6a26bdb77781e01f5a189bc9"
     },
     "category": "Investigative",
