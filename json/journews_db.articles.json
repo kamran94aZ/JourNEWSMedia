@@ -153,4 +153,16 @@
     "createdAt": {
       "$date": "2026-06-27T23:06:58Z"
     }
-}]
+},
+{
+    "_id": {
+      "$oid": "6a26bdb77781e01f5a189bc6"
+    },
+    "category": "İnvestigative",
+    "title": "Technical Analysis of System Tickets",
+    "content": "Comprehensive technical audit of the STARLIMS environment at SOCAR Polymer, documenting the transition from legacy Xbase++ / Windows Clipper architecture to modern Node.js and Python-based solutions. Identified critical runtime and compiler failures, timezone synchronization issues, and data integrity errors. Proposed strategic remediation including the development of automated PDF-to-JSON data extraction pipelines, secure file signing modules, and an internal AI-driven diagnostic chatbot to interface with the central LIMS database.",
+    "link": "https://github.com/kamran94aZ/LSMS/tree/main/SOCARPolymerEvidence",
+    "createdAt": {
+      "$date": "2026-06-26T14:00:00.000Z"
+    }
+  }]
