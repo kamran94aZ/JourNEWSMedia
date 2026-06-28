@@ -1,0 +1,159 @@
+/* INVESTIGATIVE FORENSIC DESIGN SYSTEM */
+:root {
+    --bg-color: #050505;
+    --text-color: #d1d1d1;
+    --accent-color: #c0392b; /* Deep Investigative Red */
+    --card-bg: #101012;
+    --border-color: #2a2a2c;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+}
+
+/* Header & Navigation */
+header {
+    background: #000;
+    border-bottom: 2px solid var(--accent-color);
+    padding: 1.5rem 8%;
+}
+
+.app-container { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.logo a { 
+    color: #ffffff; 
+    font-size: 1.6rem; 
+    font-weight: 800; 
+    text-transform: uppercase;
+    text-decoration: none; 
+}
+
+nav ul { 
+    display: flex; 
+    list-style: none; 
+    gap: 25px; 
+}
+
+nav a { 
+    color: #888; 
+    text-decoration: none; 
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: 0.3s; 
+}
+
+nav a:hover, nav a.active { 
+    color: var(--accent-color); 
+}
+
+/* Main Content Area */
+main { 
+    padding: 60px 8%; 
+    max-width: 1200px;
+    margin: auto;
+}
+
+h2 { 
+    border-left: 4px solid var(--accent-color); 
+    padding-left: 20px; 
+    font-size: 2.2rem; 
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+/* Evidence Gallery */
+.facts-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.facts-block h4 {
+    grid-column: 1 / -1;
+    color: var(--accent-color);
+    margin-top: 0;
+}
+
+.facts-block img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    filter: grayscale(40%);
+    transition: 0.4s;
+    cursor: zoom-in;
+}
+
+.facts-block img:hover {
+    filter: grayscale(0%);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* Document Table */
+.pdf-grid { margin-top: 50px; }
+
+.pdf-card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th { 
+    text-align: left; 
+    padding: 15px; 
+    border-bottom: 2px solid var(--border-color);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+td { 
+    border-bottom: 1px solid var(--border-color); 
+    padding: 15px; 
+}
+
+/* Document Actions */
+td a {
+    display: inline-block;
+    background: #1e1e20;
+    color: #fff;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    margin-right: 8px;
+    border: 1px solid var(--border-color);
+    transition: 0.3s;
+}
+
+td a:hover { 
+    background: var(--accent-color); 
+    border-color: var(--accent-color);
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+    font-size: 0.75rem;
+    color: #444;
+}
