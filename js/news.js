@@ -1,4 +1,3 @@
-
 const API_URL = 'https://api.jour-news.com/api/news'; 
 let db = { articles: [] };
 
