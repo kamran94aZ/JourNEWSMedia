@@ -1,15 +1,15 @@
-const API_BASE = 'https://api.jour-news.com/api/articles';
-const CURRENT_PAGE_CATEGORY = 'News'; 
+const API_BASE = 'https://api.jour-news.com/api';
+const CURRENT_PAGE_CATEGORY = 'news';
 let db = { articles: [] };
 
 const api = {
     getAll: async () => {
-        const response = await fetch(API_BASE);
+        const response = await fetch(`${API_BASE}/${CURRENT_PAGE_CATEGORY}`);
         if (!response.ok) throw new Error('Network error');
         return await response.json();
     },
     create: async (payload) => {
-        const response = await fetch(API_BASE, {
+        const response = await fetch(`${API_BASE}/add`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -21,13 +21,16 @@ const api = {
 async function fetchData() {
     try {
         const data = await api.getAll();
-        db.articles = (data.status === 'success' && data.data) ? data.data : data;
+        db.articles = Array.isArray(data) ? data : (data.articles || []);
     } catch (err) {
+        console.warn("API unavailable, falling back to local JSON:", err);
         try {
             const response = await fetch('json/journews_db.articles.json');
             const json = await response.json();
-            db.articles = (json.status === 'success' && json.data) ? json.data : json;
-        } catch (jsonErr) {}
+            db.articles = Array.isArray(json) ? json : (json.articles || []);
+        } catch (jsonErr) {
+            console.error("Local load failed:", jsonErr);
+        }
     }
     renderAll();
 }
@@ -35,8 +38,10 @@ async function fetchData() {
 async function syncArticle(articleData) {
     try {
         const json = await api.create(articleData);
-        if (json.status === 'success') await fetchData();
-    } catch (err) {}
+        if (json) await fetchData();
+    } catch (err) {
+        console.error("Synchronization error:", err);
+    }
 }
 
 async function addArticle() {
@@ -50,7 +55,6 @@ async function addArticle() {
     }
 
     await syncArticle({ title, content, category: CURRENT_PAGE_CATEGORY, link });
-    
     document.querySelectorAll("#articleTitleInput, #articleContentInput, #articleLinkInput").forEach(el => el.value = "");
 }
 
@@ -58,7 +62,7 @@ function renderAll() {
     const container = document.getElementById("newsContainer");
     if (!container) return;
 
-    const filtered = db.articles.filter(a => a.category === CURRENT_PAGE_CATEGORY);
+    const filtered = db.articles;
 
     if (filtered.length === 0) {
         container.innerHTML = `<p class="no-data-msg">No ${CURRENT_PAGE_CATEGORY} records found in the network.</p>`;
@@ -69,19 +73,19 @@ function renderAll() {
     filtered.forEach(article => {
         const articleCard = document.createElement("article");
         articleCard.className = "article-card";
-        const date = new Date(article.createdAt || Date.now()).toLocaleDateString("en-US", {
+        const date = new Date(article.publishedAt || article.createdAt || Date.now()).toLocaleDateString("en-US", {
             year: 'numeric', month: 'long', day: 'numeric'
         });
 
         articleCard.innerHTML = `
             <div class="article-meta">
-                <span class="category">${article.category}</span>
+                <span class="category">${article.category || CURRENT_PAGE_CATEGORY}</span>
                 <span class="date">${date}</span>
             </div>
             <h2 class="article-title">${article.title}</h2>
-            <div class="article-content">${article.content}</div>
+            <div class="article-content">${article.description || article.content}</div>
             <div class="article-footer">
-                ${article.link ? `<a href="${article.link}" target="_blank" class="read-more-link">Source Evidence →</a>` : '<span></span>'}
+                ${article.url || article.link ? `<a href="${article.url || article.link}" target="_blank" class="read-more-link">Source Evidence →</a>` : '<span></span>'}
             </div>
         `;
         container.appendChild(articleCard);
