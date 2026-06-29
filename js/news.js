@@ -9,7 +9,7 @@ const api = {
         return await response.json();
     },
     create: async (payload) => {
-        // POST sorğusu üçün də tam ünvanı istifadə edirik
+        
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -44,7 +44,7 @@ async function syncArticle(articleData) {
 }
 
 function renderAll() {
-    // Burada container ID-sini səhifənizə uyğun qoyun (newsContainer, scienceContainer və s.)
+
     const container = document.getElementById("newsContainer");
     if (!container) return;
 
@@ -58,7 +58,6 @@ function renderAll() {
         const articleCard = document.createElement("article");
         articleCard.className = "article-card";
         
-        // Tarix, başlıq və məzmunu render et
         articleCard.innerHTML = `
             <h2 class="article-title">${article.title}</h2>
             <div class="article-content">${article.description || article.content}</div>
