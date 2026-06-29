@@ -1,5 +1,5 @@
-const API_BASE = 'https://api.jour-news.com/api/media';
-const CURRENT_PAGE_CATEGORY = 'Media';
+const API_BASE = 'https://api.jour-news.com/api/articles';
+const CURRENT_PAGE_CATEGORY = 'NGO';
 let db = { articles: [] };
 
 const api = {
@@ -21,28 +21,22 @@ const api = {
 async function fetchData() {
     try {
         const data = await api.getAll();
-        // Ensure we always have an array of articles
-        db.articles = Array.isArray(data) ? data : (data.articles || []);
+        db.articles = (data.status === 'success' && data.data) ? data.data : data;
     } catch (err) {
-        console.error("API Fetch Error:", err);
         try {
             const response = await fetch('json/journews_db.articles.json');
             const json = await response.json();
-            db.articles = Array.isArray(json) ? json : (json.articles || []);
-        } catch (jsonErr) {
-            console.error("Local file error:", jsonErr);
-        }
+            db.articles = (json.status === 'success' && json.data) ? json.data : json;
+        } catch (jsonErr) {}
     }
     renderAll();
 }
 
 async function syncArticle(articleData) {
     try {
-        await api.create(articleData);
-        await fetchData();
-    } catch (err) {
-        console.error("Sync Error:", err);
-    }
+        const json = await api.create(articleData);
+        if (json.status === 'success') await fetchData();
+    } catch (err) {}
 }
 
 async function addArticle() {
@@ -56,7 +50,7 @@ async function addArticle() {
     }
 
     await syncArticle({ title, content, category: CURRENT_PAGE_CATEGORY, link });
-    // Clear input fields after submission
+    
     document.querySelectorAll("#articleTitleInput, #articleContentInput, #articleLinkInput").forEach(el => el.value = "");
 }
 
@@ -64,14 +58,10 @@ function renderAll() {
     const container = document.getElementById("ngoContainer");
     if (!container) return;
 
-    // Normalize data: ensure every article has a category
-    const filtered = db.articles.map(a => ({
-        ...a,
-        category: a.category || CURRENT_PAGE_CATEGORY 
-    }));
+    const filtered = db.articles.filter(a => a.category === CURRENT_PAGE_CATEGORY);
 
     if (filtered.length === 0) {
-        container.innerHTML = `<p class="no-data-msg">No ${CURRENT_PAGE_CATEGORY} records found.</p>`;
+        container.innerHTML = `<p class="no-data-msg">No ${CURRENT_PAGE_CATEGORY} records found in the network.</p>`;
         return;
     }
 
@@ -89,9 +79,9 @@ function renderAll() {
                 <span class="date">${date}</span>
             </div>
             <h2 class="article-title">${article.title}</h2>
-            <div class="article-content">${article.content || article.description || ""}</div>
+            <div class="article-content">${article.content}</div>
             <div class="article-footer">
-                ${article.link || article.url ? `<a href="${article.link || article.url}" target="_blank" class="read-more-link">Source Evidence →</a>` : '<span></span>'}
+                ${article.link ? `<a href="${article.link}" target="_blank" class="read-more-link">Source Evidence →</a>` : '<span></span>'}
             </div>
         `;
         container.appendChild(articleCard);
