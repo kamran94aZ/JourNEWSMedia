@@ -10,7 +10,7 @@ async function fetchData() {
     console.log("Fetching news from local JSON...");
     
     try {
-        // GitHub-dakı qovluq yolunu düzgün göstərdiyinizə əmin olun
+        
         const response = await fetch('json/news.json');
         
         if (!response.ok) {
@@ -29,7 +29,6 @@ async function fetchData() {
         db.articles = [];
     }
 
-    // Ekranı yeniləyirik
     renderAll();
 }
 
