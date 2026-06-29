@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const cors = require('cors'); // CORS kitabxanası əlavə olundu
+const cors = require('cors');
 const app = express();
 
 const API_KEY = process.env.NEWS_API_KEY;
