@@ -2,18 +2,15 @@ const API_BASE = 'https://api.jour-news.com/api/media';
 const CURRENT_PAGE_CATEGORY = 'Media';
 let db = { articles: [] };
 
-
 const api = {
     getAll: async () => {
-        const response = await fetch('json/news.json');
+        // Timestamp əlavə edirik ki, brauzer faylı hər dəfə yenidən yükləsin
+        const response = await fetch('json/news.json?v=' + new Date().getTime());
         if (!response.ok) throw new Error('Network error');
         return await response.json();
-    },
-    create: async (payload) => {
-        console.warn('Create operation is not supported for local JSON files.');
-        return { success: false, message: 'Read-only mode' };
     }
 };
+
 async function fetchData() {
     try {
         const data = await api.getAll();
@@ -23,13 +20,6 @@ async function fetchData() {
         db.articles = [];
     }
     renderAll();
-}
-
-async function syncArticle(articleData) {
-    try {
-        await api.create(articleData);
-        await fetchData();
-    } catch (err) { console.error(err); }
 }
 
 function renderAll() {
@@ -54,4 +44,5 @@ function renderAll() {
         container.appendChild(articleCard);
     });
 }
-fetchData();
+
+document.addEventListener('DOMContentLoaded', fetchData);
