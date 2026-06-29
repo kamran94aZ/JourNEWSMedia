@@ -19,7 +19,6 @@ async function fetchData() {
 
         const data = await response.json();
         
-        // Data-nı db-yə yazırıq
         db.articles = Array.isArray(data) ? data : (data.articles || []);
         
         console.log("Success! Articles loaded:", db.articles.length);
@@ -32,5 +31,5 @@ async function fetchData() {
     renderAll();
 }
 
-// Səhifə açıldıqda avtomatik işə düşür
+
 document.addEventListener('DOMContentLoaded', fetchData);
