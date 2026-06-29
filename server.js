@@ -6,15 +6,14 @@ const app = express();
 const API_KEY = process.env.NEWS_API_KEY;
 const PORT = process.env.PORT || 3000;
 
-
-
-
-const cors = require('cors');
+// CORS konfiqurasiyası
 app.use(cors({
-    origin: '*'
+    origin: '*',
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+app.use(express.json());
 
 // News storage
 let newsData = {
@@ -24,9 +23,6 @@ let newsData = {
     media: []
 };
 
-/**
- * Fetches news from NewsAPI by category
- */
 async function fetchNewsByCategory(category, query) {
     try {
         const url = `https://newsapi.org/v2/top-headlines?category=${query}&language=en&apiKey=${API_KEY}`;
@@ -38,9 +34,6 @@ async function fetchNewsByCategory(category, query) {
     }
 }
 
-/**
- * Updates all news categories
- */
 async function updateAllNews() {
     await fetchNewsByCategory('news', 'general');
     await fetchNewsByCategory('technology', 'technology');
@@ -48,14 +41,11 @@ async function updateAllNews() {
     await fetchNewsByCategory('media', 'business');
 }
 
-// Initial fetch and set interval (1 hour)
 updateAllNews();
 setInterval(updateAllNews, 3600000);
 
-// Serve static files from root directory
 app.use(express.static(__dirname));
 
-// API endpoint to serve cached news
 app.get('/api/:category', (req, res) => {
     const category = req.params.category;
     if (newsData[category]) {
