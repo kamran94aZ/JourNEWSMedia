@@ -21,11 +21,10 @@ const api = {
 async function fetchData() {
     try {
         const data = await api.getAll();
-        // Serverdən gələn cavabı olduğu kimi götür
         db.articles = Array.isArray(data) ? data : (data.articles || []);
     } catch (err) {
         console.warn("API Error:", err);
-        // API işləmirsə, local faylı yoxla
+       
         try {
             const response = await fetch('json/journews_db.articles.json');
             const json = await response.json();
