@@ -1,4 +1,7 @@
+const API_BASE = 'https://api.jour-news.com/api/articles';
+const CURRENT_PAGE_CATEGORY = 'Media';
 let db = { articles: [] };
+
 
 const api = {
     getAll: async () => {
