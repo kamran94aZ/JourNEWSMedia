@@ -3,8 +3,7 @@ const API_URL = 'https://api.jour-news.com/api/news';
 let db = { articles: [] };
 
 const api = {
-    getAll: async () => {
-        
+    getAll: async () => {   
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error('Network error');
         return await response.json();
