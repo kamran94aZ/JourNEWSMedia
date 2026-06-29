@@ -21,13 +21,17 @@ const api = {
 async function fetchData() {
     try {
         const data = await api.getAll();
+        // Ensure we always have an array of articles
         db.articles = Array.isArray(data) ? data : (data.articles || []);
     } catch (err) {
+        console.error("API Fetch Error:", err);
         try {
             const response = await fetch('json/journews_db.articles.json');
             const json = await response.json();
             db.articles = Array.isArray(json) ? json : (json.articles || []);
-        } catch (jsonErr) {}
+        } catch (jsonErr) {
+            console.error("Local file error:", jsonErr);
+        }
     }
     renderAll();
 }
@@ -36,7 +40,9 @@ async function syncArticle(articleData) {
     try {
         await api.create(articleData);
         await fetchData();
-    } catch (err) {}
+    } catch (err) {
+        console.error("Sync Error:", err);
+    }
 }
 
 async function addArticle() {
@@ -50,6 +56,7 @@ async function addArticle() {
     }
 
     await syncArticle({ title, content, category: CURRENT_PAGE_CATEGORY, link });
+    // Clear input fields after submission
     document.querySelectorAll("#articleTitleInput, #articleContentInput, #articleLinkInput").forEach(el => el.value = "");
 }
 
@@ -57,6 +64,7 @@ function renderAll() {
     const container = document.getElementById("ngoContainer");
     if (!container) return;
 
+    // Normalize data: ensure every article has a category
     const filtered = db.articles.map(a => ({
         ...a,
         category: a.category || CURRENT_PAGE_CATEGORY 
