@@ -34,7 +34,7 @@ async function syncArticle(articleData) {
 }
 
 function renderAll() {
-    const container = document.getElementById("newsContainer");
+    const container = document.getElementById("scienceContainer"); 
     if (!container) return;
 
     if (db.articles.length === 0) {
