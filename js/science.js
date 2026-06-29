@@ -1,4 +1,4 @@
-const API_BASE = https://api.jour-news.com/api/news';
+const API_BASE = https://api.jour-news.com/api/science';
 const CURRENT_PAGE_CATEGORY = 'science';
 let db = { articles: [] };
 
