@@ -1,4 +1,4 @@
-const API_BASE = https://api.jour-news.com/api/media;
+const API_URL = 'https://api.jour-news.com/api/news'; 
 let db = { articles: [] };
 
 const api = {
