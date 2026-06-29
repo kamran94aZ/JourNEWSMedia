@@ -7,8 +7,14 @@ const API_KEY = process.env.NEWS_API_KEY;
 const PORT = process.env.PORT || 3000;
 
 
+
 app.use(cors({
-    origin: ['https://jour-news.com', 'https://api.jour-news.com']
+    origin: [
+        'https://jour-news.com', 
+        'https://journewsmedia.fly.dev' 
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true
 }));
 
 // News storage
