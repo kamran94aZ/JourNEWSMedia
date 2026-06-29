@@ -1,9 +1,15 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors'); // CORS kitabxanası əlavə olundu
 const app = express();
 
 const API_KEY = process.env.NEWS_API_KEY;
 const PORT = process.env.PORT || 3000;
+
+// CORS aktivləşdirildi: Yalnız sizin domeninizdən gələn sorğulara icazə verilir
+app.use(cors({
+    origin: ['https://jour-news.com', 'https://api.jour-news.com']
+}));
 
 // News storage
 let newsData = {
@@ -15,7 +21,6 @@ let newsData = {
 
 /**
  * Fetches news from NewsAPI by category
- * 'general' is used for top news as 'news' category doesn't exist in API
  */
 async function fetchNewsByCategory(category, query) {
     try {
@@ -42,7 +47,7 @@ async function updateAllNews() {
 updateAllNews();
 setInterval(updateAllNews, 3600000);
 
-// Serve static files from 'public' directory
+// Serve static files from root directory
 app.use(express.static(__dirname));
 
 // API endpoint to serve cached news
