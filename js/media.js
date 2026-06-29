@@ -1,14 +1,14 @@
-const API_BASE = 'https://api.jour-news.com/api/articles';
+const API_BASE = 'https://api.jour-news.com/api';
 let db = { articles: [] };
 
 const api = {
-    getAll: async () => {
-        const response = await fetch(API_BASE);
+    getAll: async (category) => {
+        const response = await fetch(`${API_BASE}/${category.toLowerCase()}`);
         if (!response.ok) throw new Error('Network error');
         return await response.json();
     },
     create: async (payload) => {
-        const response = await fetch(API_BASE, {
+        const response = await fetch(`${API_BASE}/add`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -17,26 +17,23 @@ const api = {
     }
 };
 
-
-const CURRENT_PAGE_CATEGORY = 'Media'; 
+const CURRENT_PAGE_CATEGORY = 'media';
 
 async function fetchData() {
     try {
-        
-        const data = await api.getAll();
-        db.articles = (data.status === 'success' && data.data) ? data.data : data;
+        const data = await api.getAll(CURRENT_PAGE_CATEGORY);
+        db.articles = data;
     } catch (err) {
         console.warn("API unavailable, falling back to local JSON:", err);
-        
         try {
             const response = await fetch('json/journews_db.articles.json');
             const json = await response.json();
-            db.articles = (json.status === 'success' && json.data) ? json.data : json;
+            db.articles = json.filter(a => a.category.toLowerCase() === CURRENT_PAGE_CATEGORY);
         } catch (jsonErr) {
             console.error("Local load failed:", jsonErr);
         }
     }
-    renderAll(CURRENT_PAGE_CATEGORY);
+    renderAll();
 }
 
 async function syncArticle(articleData) {
@@ -58,41 +55,36 @@ async function addArticle() {
         return;
     }
 
-  
     await syncArticle({ title, content, category: CURRENT_PAGE_CATEGORY, link });
-    
     document.querySelectorAll("#articleTitleInput, #articleContentInput, #articleLinkInput").forEach(el => el.value = "");
 }
 
-function renderAll(category) {
+function renderAll() {
     const container = document.getElementById("mediaContainer");
     if (!container) return;
 
-   
-    const filtered = db.articles.filter(a => a.category === category);
-
-    if (filtered.length === 0) {
-        container.innerHTML = `<p class="no-data-msg">No ${category} records found.</p>`;
+    if (db.articles.length === 0) {
+        container.innerHTML = `<p class="no-data-msg">No ${CURRENT_PAGE_CATEGORY} records found.</p>`;
         return;
     }
 
     container.innerHTML = "";
-    filtered.forEach(article => {
+    db.articles.forEach(article => {
         const articleCard = document.createElement("article");
         articleCard.className = "article-card";
-        const date = new Date(article.createdAt || Date.now()).toLocaleDateString("en-US", {
+        const date = new Date(article.publishedAt || Date.now()).toLocaleDateString("en-US", {
             year: 'numeric', month: 'long', day: 'numeric'
         });
 
         articleCard.innerHTML = `
             <div class="article-meta">
-                <span class="category">${article.category}</span>
+                <span class="category">${article.category || CURRENT_PAGE_CATEGORY}</span>
                 <span class="date">${date}</span>
             </div>
             <h2 class="article-title">${article.title}</h2>
-            <div class="article-content">${article.content}</div>
+            <div class="article-content">${article.description || article.content}</div>
             <div class="article-footer">
-                ${article.link ? `<a href="${article.link}" target="_blank" class="read-more-link">Source Evidence →</a>` : '<span></span>'}
+                ${article.url ? `<a href="${article.url}" target="_blank" class="read-more-link">Source Evidence →</a>` : '<span></span>'}
             </div>
         `;
         container.appendChild(articleCard);
