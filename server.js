@@ -8,13 +8,11 @@ const PORT = process.env.PORT || 3000;
 
 
 
+
 app.use(cors({
-    origin: [
-        'https://jour-news.com', 
-        'https://journewsmedia.fly.dev' 
-    ],
-    methods: ['GET', 'POST'],
-    credentials: true
+    origin: '*',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // News storage
