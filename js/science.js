@@ -1,5 +1,7 @@
+const API_BASE = 'https://api.jour-news.com/api/media';
 const CURRENT_PAGE_CATEGORY = 'Science';
 let db = { articles: [] };
+
 
 const api = {
     getAll: async () => {
