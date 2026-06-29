@@ -1,5 +1,5 @@
 const API_BASE = 'https://api.jour-news.com/api/media';
-const CURRENT_PAGE_CATEGORY = 'News';
+const CURRENT_PAGE_CATEGORY = 'Media';
 let db = { articles: [] };
 
 const api = {
@@ -21,12 +21,12 @@ const api = {
 async function fetchData() {
     try {
         const data = await api.getAll();
-        db.articles = (data.status === 'success' && data.data) ? data.data : data;
+        db.articles = Array.isArray(data) ? data : (data.articles || []);
     } catch (err) {
         try {
             const response = await fetch('json/journews_db.articles.json');
             const json = await response.json();
-            db.articles = (json.status === 'success' && json.data) ? json.data : json;
+            db.articles = Array.isArray(json) ? json : (json.articles || []);
         } catch (jsonErr) {}
     }
     renderAll();
@@ -34,8 +34,8 @@ async function fetchData() {
 
 async function syncArticle(articleData) {
     try {
-        const json = await api.create(articleData);
-        if (json.status === 'success') await fetchData();
+        await api.create(articleData);
+        await fetchData();
     } catch (err) {}
 }
 
@@ -50,7 +50,6 @@ async function addArticle() {
     }
 
     await syncArticle({ title, content, category: CURRENT_PAGE_CATEGORY, link });
-    
     document.querySelectorAll("#articleTitleInput, #articleContentInput, #articleLinkInput").forEach(el => el.value = "");
 }
 
@@ -58,10 +57,13 @@ function renderAll() {
     const container = document.getElementById("ngoContainer");
     if (!container) return;
 
-    const filtered = db.articles.filter(a => a.category === CURRENT_PAGE_CATEGORY);
+    const filtered = db.articles.map(a => ({
+        ...a,
+        category: a.category || CURRENT_PAGE_CATEGORY 
+    }));
 
     if (filtered.length === 0) {
-        container.innerHTML = `<p class="no-data-msg">No ${CURRENT_PAGE_CATEGORY} records found in the network.</p>`;
+        container.innerHTML = `<p class="no-data-msg">No ${CURRENT_PAGE_CATEGORY} records found.</p>`;
         return;
     }
 
@@ -79,9 +81,9 @@ function renderAll() {
                 <span class="date">${date}</span>
             </div>
             <h2 class="article-title">${article.title}</h2>
-            <div class="article-content">${article.content}</div>
+            <div class="article-content">${article.content || article.description || ""}</div>
             <div class="article-footer">
-                ${article.link ? `<a href="${article.link}" target="_blank" class="read-more-link">Source Evidence →</a>` : '<span></span>'}
+                ${article.link || article.url ? `<a href="${article.link || article.url}" target="_blank" class="read-more-link">Source Evidence →</a>` : '<span></span>'}
             </div>
         `;
         container.appendChild(articleCard);
