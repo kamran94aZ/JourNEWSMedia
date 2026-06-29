@@ -1,51 +1,23 @@
-const API_URL = 'https://api.jour-news.com/api/science';
+const CURRENT_PAGE_CATEGORY = 'Science';
 let db = { articles: [] };
 
-const api = {
-    getAll: async () => {    
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error('Network error');
-        return await response.json();
-    },
-    create: async (payload) => {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        return await response.json();
-    }
-};
-
-async function syncArticle(articleData) {
+async function fetchData() {
     try {
-        await api.create(articleData);
-        await fetchData();
-    } catch (err) { console.error(err); }
-}
+        const response = await fetch('json/science.json');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-function renderAll() {
-
-    const container = document.getElementById("newsContainer");
-    if (!container) return;
-
-    if (db.articles.length === 0) {
-        container.innerHTML = `<p>No records found.</p>`;
-        return;
+        const data = await response.json();
+        
+        db.articles = Array.isArray(data) ? data : (data.articles || []);
+    } catch (err) {
+        console.error("Error loading science.json:", err);
+        db.articles = []; 
     }
 
-    container.innerHTML = "";
-    db.articles.forEach(article => {
-        const articleCard = document.createElement("article");
-        articleCard.className = "article-card";
-        
-        articleCard.innerHTML = `
-            <h2 class="article-title">${article.title}</h2>
-            <div class="article-content">${article.description || article.content}</div>
-            ${article.url || article.link ? `<a href="${article.url || article.link}" target="_blank">Source Evidence →</a>` : ''}
-        `;
-        container.appendChild(articleCard);
-    });
+    renderAll();
 }
 
-fetchData();
+document.addEventListener('DOMContentLoaded', fetchData);
