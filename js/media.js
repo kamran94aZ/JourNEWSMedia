@@ -30,8 +30,7 @@ async function syncArticle(articleData) {
 }
 
 function renderAll() {
-
-    const container = document.getElementById("newsContainer");
+    const container = document.getElementById("mediaContainer"); 
     if (!container) return;
 
     if (db.articles.length === 0) {
@@ -46,11 +45,10 @@ function renderAll() {
         
         articleCard.innerHTML = `
             <h2 class="article-title">${article.title}</h2>
-            <div class="article-content">${article.description || article.content}</div>
+            <div class="article-content">${article.description || article.content || 'No content available.'}</div>
             ${article.url || article.link ? `<a href="${article.url || article.link}" target="_blank">Source Evidence →</a>` : ''}
         `;
         container.appendChild(articleCard);
     });
 }
-
 fetchData();
