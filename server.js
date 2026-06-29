@@ -6,7 +6,7 @@ const app = express();
 const API_KEY = process.env.NEWS_API_KEY;
 const PORT = process.env.PORT || 3000;
 
-// CORS aktivləşdirildi: Yalnız sizin domeninizdən gələn sorğulara icazə verilir
+
 app.use(cors({
     origin: ['https://jour-news.com', 'https://api.jour-news.com']
 }));
