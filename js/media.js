@@ -1,4 +1,4 @@
-const API_BASE = 'https://api.jour-news.com/api/articles';
+const API_BASE = 'https://api.jour-news.com/api/media';
 const CURRENT_PAGE_CATEGORY = 'Media';
 let db = { articles: [] };
 
