@@ -9,12 +9,12 @@ const PORT = process.env.PORT || 3000;
 
 
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    next();
-});
+const cors = require('cors');
+app.use(cors({
+    origin: '*'
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // News storage
 let newsData = {
