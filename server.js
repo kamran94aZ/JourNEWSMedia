@@ -43,7 +43,7 @@ updateAllNews();
 setInterval(updateAllNews, 3600000);
 
 // Serve static files from 'public' directory
-app.use(express.static('public'));
+app.use(express.static(__dirname));
 
 // API endpoint to serve cached news
 app.get('/api/:category', (req, res) => {
