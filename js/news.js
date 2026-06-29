@@ -1,10 +1,10 @@
-// DİQQƏT: Bu sətrə səhifənizə uyğun tam linki yazın (məsələn: .../api/news və ya .../api/science)
+
 const API_URL = 'https://api.jour-news.com/api/news'; 
 let db = { articles: [] };
 
 const api = {
     getAll: async () => {
-        // Kod heç nəyi dəyişmir, birbaşa API_URL-ə müraciət edir
+        
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error('Network error');
         return await response.json();
