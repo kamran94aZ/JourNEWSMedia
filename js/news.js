@@ -1,4 +1,3 @@
-const API_URL = 'https://api.jour-news.com/api/news';
 const CURRENT_PAGE_CATEGORY = 'Global News';
 let db = { articles: [] };
 
