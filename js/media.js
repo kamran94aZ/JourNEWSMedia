@@ -3,8 +3,7 @@ const CURRENT_PAGE_CATEGORY = 'Media';
 let db = { articles: [] };
 
 const api = {
-    getAll: async () => {
-        
+    getAll: async () => {   
         const response = await fetch('json/news.json?v=' + new Date().getTime());
         if (!response.ok) throw new Error('Network error');
         return await response.json();
