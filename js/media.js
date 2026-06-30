@@ -4,7 +4,7 @@ let db = { articles: [] };
 
 const api = {
     getAll: async () => {
-        // Timestamp əlavə edirik ki, brauzer faylı hər dəfə yenidən yükləsin
+        
         const response = await fetch('json/news.json?v=' + new Date().getTime());
         if (!response.ok) throw new Error('Network error');
         return await response.json();
