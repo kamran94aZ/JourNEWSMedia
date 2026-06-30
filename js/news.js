@@ -1,48 +1,27 @@
 const API_URL = 'https://api.jour-news.com/api/news';
+const CURRENT_PAGE_CATEGORY = 'News';
 let db = { articles: [] };
 
 const api = {
-    getAll: async () => {    
-        const response = await fetch(API_URL);
+    getAll: async () => {   
+        const response = await fetch('json/news.json?v=' + new Date().getTime());
         if (!response.ok) throw new Error('Network error');
-        return await response.json();
-    },
-    create: async (payload) => {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
         return await response.json();
     }
 };
-
 async function fetchData() {
     try {
         const data = await api.getAll();
         db.articles = Array.isArray(data) ? data : (data.articles || []);
     } catch (err) {
-        console.warn("API Error:", err);
-       
-        try {
-            const response = await fetch('json/journews_db.articles.json');
-            const json = await response.json();
-            db.articles = Array.isArray(json) ? json : (json.articles || []);
-        } catch (jsonErr) {}
+        console.error("Error loading news:", err);
+        db.articles = [];
     }
     renderAll();
 }
 
-async function syncArticle(articleData) {
-    try {
-        await api.create(articleData);
-        await fetchData();
-    } catch (err) { console.error(err); }
-}
-
 function renderAll() {
-
-    const container = document.getElementById("newsContainer");
+    const container = document.getElementById("newsContainer"); 
     if (!container) return;
 
     if (db.articles.length === 0) {
@@ -57,11 +36,11 @@ function renderAll() {
         
         articleCard.innerHTML = `
             <h2 class="article-title">${article.title}</h2>
-            <div class="article-content">${article.description || article.content}</div>
+            <div class="article-content">${article.description || article.content || 'No content available.'}</div>
             ${article.url || article.link ? `<a href="${article.url || article.link}" target="_blank">Source Evidence →</a>` : ''}
         `;
         container.appendChild(articleCard);
     });
 }
 
-fetchData();
+document.addEventListener('DOMContentLoaded', fetchData);
