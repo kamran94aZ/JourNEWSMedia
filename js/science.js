@@ -5,7 +5,7 @@ let db = { articles: [] };
 
 const api = {
     getAll: async () => {
-        const response = await fetch('json/science.json');
+        const response = await fetch('json/news.json');
         if (!response.ok) throw new Error('Network error');
         return await response.json();
     },
