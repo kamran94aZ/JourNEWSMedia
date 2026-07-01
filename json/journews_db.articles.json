@@ -177,4 +177,16 @@
   "createdAt": {
     "$date": "2026-06-26T14:00:00.000Z"
   }
+},
+{
+  "_id": {
+    "$oid": "6a26bdb77781e01f5a189bc6"
+  },
+  "category": "İnvestigative",
+  "title": "Formal Complaint: Institutional Misconduct and Human Rights Violations in Humanitarian Operations",
+  "content": "I am writing to formally request an urgent, independent investigation into the operations of Choose Love and No Name Kitchen (NNK). As a professional journalist, member of the British Computer Society (MBCS), IAPP journalist, and founder of Jour News Media, my field investigations in Sjenica, Serbia, have uncovered a dangerous systemic failure between the organizations' stated humanitarian missions and their actual practices. The following critical issues warrant immediate international intervention: Institutional Opacity and Behavioral Misconduct: I have documented instances of inappropriate sexual activity involving volunteers and coordinators within volunteer quarters. Despite formal reports, these incidents have been met with institutional indifference, and no effective disciplinary action has been taken. Obstruction of Transparency: My inquiries into the closure of the Sjenica Camp and operational shifts were systematically suppressed. During professional interviews, my attempts to clarify these processes were cut off by coordinators with the dismissal: \"we will discuss this later,\" effectively silencing legitimate investigation into organizational agendas. The \"Safeguarding\" Problem: The \"Safeguarding\" units of Choose Love and NNK function as a black box. They operate without transparency, refusing to disclose their mission, objectives, or leadership hierarchy. I consider these units to be high-risk, as they function primarily as tools for bureaucratic mobbing and the suppression of whistleblowers rather than the protection of participants. Systemic Negligence and Medical Deprivation: My repeated attempts to communicate these concerns via phone and email have been met with calculated silence. Furthermore, despite my documented physical and psychological health challenges—aggravated by the systematic mobbing I have been subjected to—I have been denied appropriate medical and psychological support by these entities. Intimidation and Surveillance: These organizations have attempted to extract confidential, privileged information regarding my psychological health, which I view as a coercive tactic designed to neutralize my investigative reporting. The pattern of behavior exhibited by NNK and Choose Love—which mirrors the corrupt dynamics of entities such as SOCAR—suggests a clandestine approach to management that endangers migrants and undermines humanitarian integrity. Their actions are not merely organizational failures; they are structural threats to the safety of those they claim to protect. I request that the United Nations dispatch an independent inspector to examine these operations immediately. I hold extensive documentation, testimonies, and evidence regarding these violations and am fully prepared to present them to an impartial investigatory body. Respectfully yours, Kamran Murad, Founder, Jour News Media, MBCS Member, BCS | IAPP Journalist",
+  "link": "https://github.com/kamran94aZ/",
+  "createdAt": {
+    "$date": "2026-07-01T20:00:00.000Z"
+  }
 }]
