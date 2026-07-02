@@ -1,10 +1,11 @@
-const API_BASE = 'https://api.jour-news.com/api/articles';
+// Removed the unused external API_BASE constant
 let db = { articles: [] };
 
 const api = {
+    // Fetches directly from your local file with a timestamp to prevent caching issues
     getAll: async () => {
         const response = await fetch('json/journews_db.articles.json?t=' + new Date().getTime());
-        if (!response.ok) throw new Error('Network error');
+        if (!response.ok) throw new Error('Network error: Could not load local data');
         return await response.json();
     }
 };
@@ -12,9 +13,9 @@ const api = {
 async function fetchData(filterCategory = null) {
     try {
         const data = await api.getAll();
-        db.articles = Array.isArray(data) ? data : [];
+        // Ensure data is an array
+        db.articles = Array.isArray(data) ? data : (data.articles || []);
         
-       
         const filteredArticles = filterCategory 
             ? db.articles.filter(a => a.category && a.category.toLowerCase() === filterCategory.toLowerCase())
             : db.articles;
@@ -24,7 +25,7 @@ async function fetchData(filterCategory = null) {
         console.error("Connection Error:", err);
         const container = document.getElementById("articlesContainer");
         if (container) {
-            container.innerHTML = `<p style="color: #ff4a4a;">Failed to load articles.</p>`;
+            container.innerHTML = `<p style="color: #ff4a4a;">Failed to load articles. Please check if the local JSON file exists.</p>`;
         }
     }
 }
@@ -39,7 +40,8 @@ function renderArticles(articles) {
         const articleCard = document.createElement("article");
         articleCard.className = "news-card";
         
-        const rawDate = article.createdAt && article.createdAt.$date ? article.createdAt.$date : article.createdAt;
+        // Handling both raw date strings and MongoDB-style $date objects
+        const rawDate = (article.createdAt && article.createdAt.$date) ? article.createdAt.$date : article.createdAt;
         const date = rawDate ? new Date(rawDate).toLocaleDateString() : '';
 
         articleCard.innerHTML = `
@@ -59,4 +61,5 @@ function renderArticles(articles) {
     });
 }
 
+// Initialize the fetch
 fetchData();
