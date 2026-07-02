@@ -1,10 +1,11 @@
-const API_BASE = 'https://api.jour-news.com/api/articles';
+// Removed dead external API_BASE
 let db = { articles: [] };
 
 const api = {
+    // Fetches from the specified local file
     getAll: async () => {
-        const response = await fetch('json/journews_db.articles.json');
-        if (!response.ok) throw new Error('Network error');
+        const response = await fetch('json/journews_db.articles.json?t=' + new Date().getTime());
+        if (!response.ok) throw new Error('Network error: Cannot load local database');
         return await response.json();
     }
 };
@@ -13,10 +14,15 @@ async function fetchData() {
     try {
         const json = await api.getAll();
         
-        db.articles = Array.isArray(json) ? json : (json.data || []);
+        // Safely handles array or nested object structure
+        db.articles = Array.isArray(json) ? json : (json.data || json.articles || []);
         renderAll();
     } catch (err) {
         console.error("Connection Error:", err);
+        const container = document.getElementById("technologyContainer");
+        if (container) {
+            container.innerHTML = `<p class="no-data-msg" style="color: #ff4a4a;">Error loading technology data.</p>`;
+        }
     }
 }
 
@@ -24,7 +30,7 @@ function renderAll() {
     const container = document.getElementById("technologyContainer");
     if (!container) return;
 
-    
+    // Filter articles for 'technology' category
     const filteredArticles = db.articles.filter(article => 
         article.category && article.category.toLowerCase() === 'technology'
     );
@@ -38,7 +44,10 @@ function renderAll() {
     filteredArticles.forEach(article => {
         const articleCard = document.createElement("article");
         articleCard.className = "article-card";
-        const date = article.createdAt ? new Date(article.createdAt).toLocaleDateString("en-US") : '';
+        
+        // Handle date, considering potential MongoDB $date object format
+        const rawDate = (article.createdAt && article.createdAt.$date) ? article.createdAt.$date : article.createdAt;
+        const date = rawDate ? new Date(rawDate).toLocaleDateString("en-US") : '';
 
         articleCard.innerHTML = `
             <div class="article-meta">
