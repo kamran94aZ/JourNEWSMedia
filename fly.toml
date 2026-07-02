@@ -1,11 +1,16 @@
-app = 'journewsmedia'
-primary_region = 'iad'
+# fly.toml app configuration file generated for journewsmedia-ou2lhw on 2026-07-02T07:53:14Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'journewsmedia-ou2lhw'
+primary_region = 'ams'
 
 [build]
   dockerfile = 'Dockerfile'
 
 [http_service]
-  internal_port = 3000
+  internal_port = 8080
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
