@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 
 const API_KEY = process.env.NEWS_API_KEY;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // CORS konfiqurasiyası
 app.use(cors({
